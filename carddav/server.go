@@ -336,11 +336,11 @@ func (b *backend) propfindAddressBook(propfind *internal.Propfind, ab *AddressBo
 		},
 		// TODO: this is a principal property
 		addressBookHomeSetName: func(*internal.RawXMLValue) (interface{}, error) {
-			return &addressbookHomeSet{Href: internal.Href{Path: "/"}}, nil
+			return &addressbookHomeSet{Href: internal.Href{Path: ab.Path}}, nil
 		},
 		// TODO: this should be set on all resources
 		internal.CurrentUserPrincipalName: func(*internal.RawXMLValue) (interface{}, error) {
-			return &internal.CurrentUserPrincipal{Href: internal.Href{Path: "/"}}, nil
+			return &internal.CurrentUserPrincipal{Href: internal.Href{Path: ab.Path}}, nil
 		},
 	}
 
@@ -350,7 +350,7 @@ func (b *backend) propfindAddressBook(propfind *internal.Propfind, ab *AddressBo
 		}
 	}
 
-	return internal.NewPropfindResponse("/", propfind, props)
+	return internal.NewPropfindResponse(ab.Path, propfind, props)
 }
 
 func (b *backend) propfindAddressObject(propfind *internal.Propfind, ao *AddressObject) (*internal.Response, error) {
